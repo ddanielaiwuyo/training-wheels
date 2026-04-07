@@ -47,12 +47,11 @@ fn run(config: &Config) {
         process::exit(1);
     });
 
-    let mut result = Vec::new();
-    if config.ignore_case {
-        result = search_case_insensitive(&config.query.as_str(), contents.as_str());
+    let result = if config.ignore_case {
+        search_case_insensitive(&config.query.as_str(), contents.as_str())
     } else {
-        result = search(&config.query.as_str(), contents.as_str());
-    }
+        search(&config.query.as_str(), contents.as_str())
+    };
 
     for line in result {
         println!("{line}")
