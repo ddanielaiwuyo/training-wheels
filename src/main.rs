@@ -30,6 +30,7 @@ impl Config {
     }
 }
 
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     let config = Config::build(&args).unwrap_or_else(|err| {
@@ -41,6 +42,7 @@ fn main() {
     run(&config)
 }
 
+
 fn run(config: &Config) {
     let contents = fs::read_to_string(&config.src_file).unwrap_or_else(|err| {
         eprintln!("Could not get {}. {err}", config.src_file);
@@ -48,9 +50,9 @@ fn run(config: &Config) {
     });
 
     let result = if config.ignore_case {
-        search_case_insensitive(&config.query.as_str(), contents.as_str())
+        search_case_insensitive(&config.query, &contents)
     } else {
-        search(&config.query.as_str(), contents.as_str())
+        search(&config.query, &contents)
     };
 
     for line in result {
